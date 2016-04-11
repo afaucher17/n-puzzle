@@ -27,9 +27,6 @@ fn main() {
         _ => (),
     };
     let result: String = read_files(&argv[1]);
-    let vec: Vec<_> = result.split("\n").map(|s| s.to_string()).collect();
-    for s in parser::remove_comments(vec)
-    {
-        println!("{}", s);
-    }
+    let vec: Vec<String> = result.split("\n").map(|s| s.to_string()).collect();
+    parser::to_array(parser::remove_comments(vec));
 }
