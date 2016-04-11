@@ -1,3 +1,5 @@
+mod parser;
+
 use std::error::Error;
 use std::env;
 use std::io::prelude::*;
@@ -25,5 +27,9 @@ fn main() {
         _ => (),
     };
     let result = read_files(&argv[1]);
-    print!("File 1 => {}", result);
+    let vec: Vec<_> = result.split('\n').collect();
+    for s in parser::remove_comments(vec)
+    {
+        println!("{}", s);
+    }
 }
