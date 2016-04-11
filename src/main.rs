@@ -26,8 +26,8 @@ fn main() {
         1 => { println!("Usage:\t{} puzzle_file [extra_puzzles]", &argv[0]); return },
         _ => (),
     };
-    let result = read_files(&argv[1]);
-    let vec: Vec<_> = result.split('\n').collect();
+    let result: String = read_files(&argv[1]);
+    let vec: Vec<_> = result.split("\n").map(|s| s.to_string()).collect();
     for s in parser::remove_comments(vec)
     {
         println!("{}", s);
