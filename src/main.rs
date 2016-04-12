@@ -1,4 +1,5 @@
 mod parser;
+mod node;
 
 use std::error::Error;
 use std::env;
