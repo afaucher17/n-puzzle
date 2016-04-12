@@ -19,3 +19,18 @@ pub fn to_array(lines: Vec<String>) -> u32
     println!("{}", s);
     size
 }
+
+pub fn to_array_test(lines: Vec<String>) -> [String]
+{
+    let size: u32 = match lines[0].parse::<u32>() {
+        Ok(n) => match n {
+            0...2 => panic!("The array size must be equal or greater than 3."),
+            _ => n,
+        },
+        Err(_) => panic!("The array size is invalid."),
+    };
+    let mut array: [String; size] = [""; size];
+    for x in &array {
+
+    }
+}
