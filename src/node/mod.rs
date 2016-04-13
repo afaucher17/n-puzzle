@@ -1,49 +1,58 @@
 use std::hash::{Hash, Hasher};
+use std::fmt;
 
-struct Node
+pub struct Node
 {
-    state: Vec<Vec<usize>>,
-    len: usize
+    pub state: Vec<usize>,
+    pub len: usize
 }
 
-impl Hash for Node {
+impl Hash for Node
+{
     fn hash<H: Hasher>(&self, state: &mut H)
     {
         self.state.hash(state);
     }
 }
 
+impl fmt::Display for Node 
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result
+    {
+        let padding = format!("{}", self.len * self.len).len();
+        write!(f, "{}" ,(0..self.len * self.len)
+            .map(|i| format!("{1:00$}{2}", padding, self.state[i], if (i + 1) % self.len == 0 { "\n" } else { " " }))
+            .collect::<String>())
+    }
+}
+
 impl Node
 {
-    fn swap(&self, sq1: (usize, usize), sq2: (usize, usize)) -> Node
+    fn swap(&self, sq1: usize, sq2: usize) -> Node
     {
        let mut v = self.state.clone();
-       let (x1, y1) = sq1;
-       let (x2, y2) = sq2;
-       let save = v[x1][y1];
-       v[x1][y1] = v[x2][y2];
-       v[x2][y2] = save;
+       let save = v[sq1];
+       v[sq1] = v[sq2];
+       v[sq2] = save;
        Node { state: v, len: self.len }
     }
 
     fn get_neighbour(&self) -> Vec<Node>
     {
         let mut res = Vec::with_capacity(4);
-        let (x, y) = || -> (usize, usize)
+        let size = self.len;
+        let x = || -> usize
         {
-            for i in 0..self.len
+            for i in 0..size
             {
-                for j in 0..self.state[i].len()
-                {
-                    if self.state[i][j] == 0 { return (i, j); }
-                }
+                if self.state[i] == 0 { return i; }
             }
             panic!("The empty square is missing");
         }();
-        if x > 0 { res.push(self.swap((x, y), (x - 1, y))); }
-        if y > 0 { res.push(self.swap((x, y), (x, y - 1))); }
-        if x < self.len { res.push(self.swap((x, y), (x + 1, y))); }
-        if y < self.len { res.push(self.swap((x, y), (x, y + 1))); }
+        if (x % size) > 0 { res.push(self.swap(x, x - 1)); }
+        if x - size > 0 { res.push(self.swap(x, x - size)); }
+        if (x + 1 % size) > 0 { res.push(self.swap(x, x + 1)); }
+        if x + size < size*size { res.push(self.swap(x, x + size)); }
         res
     }
 }

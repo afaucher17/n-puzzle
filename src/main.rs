@@ -1,5 +1,6 @@
 mod parser;
 mod node;
+mod astar;
 
 use std::error::Error;
 use std::env;
@@ -31,10 +32,13 @@ fn main() {
     let vec: Vec<String> = result.split("\n")
         .map(|s| s.to_string())
         .collect();
-    for tab in parser::to_array(parser::remove_comments(vec)) {
-        for square in tab {
-            print!("{} ", square);
-        }
-        println!("");
-    }
+    let start = parser::to_node(parser::remove_comments(vec));
+    println!("{}", astar::create_goal(11));
+    println!("{}", astar::create_goal(9));
+    println!("{}", astar::create_goal(8));
+    println!("{}", astar::create_goal(7));
+    println!("{}", astar::create_goal(6));
+    println!("{}", astar::create_goal(5));
+    println!("{}", astar::create_goal(4));
+    println!("{}", astar::create_goal(3));
 }
