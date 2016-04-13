@@ -38,7 +38,7 @@ impl Node
                     if self.state[i][j] == 0 { return (i, j); }
                 }
             }
-            panic!("Call Batman");
+            panic!("The empty square is missing");
         }();
         if x > 0 { res.push(self.swap((x, y), (x - 1, y))); }
         if y > 0 { res.push(self.swap((x, y), (x, y - 1))); }
