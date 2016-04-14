@@ -1,8 +1,11 @@
+use std::ascii::AsciiExt;
+
 use node::{Node, Goal};
 
 pub enum Heuristic
 {
     Manhattan,
+    // Your new heuristic
 }
 
 impl Heuristic {
@@ -14,7 +17,7 @@ impl Heuristic {
             let square = node.state[i];
             if let Some(&(x, y)) = goal.map.get(&square) {
                 score += if square == 0 { 0 }
-                else { 
+                else {
                     (x as i32 - (i % node.len) as i32).abs()
                     + (y as i32 - (i / node.len) as i32).abs()
                 }
@@ -23,10 +26,20 @@ impl Heuristic {
         score
     }
 
+    pub fn get_heuristic(s: String) -> Option<Heuristic>
+    {
+        match s.to_ascii_lowercase().as_ref() {
+            "manhattan" => Some(Heuristic::Manhattan),
+            // Your new heuristic string => heuristic enum
+            _ => None
+        }
+    }
+
     pub fn get_score(&self, node: &Node, goal: &Goal) -> i32
     {
         match *self {
             Heuristic::Manhattan => Heuristic::manhattan(node, goal)
+            // Your new heuristic enum => heuristic function
         }
     }
 }
