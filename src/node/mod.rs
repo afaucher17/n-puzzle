@@ -37,22 +37,22 @@ impl Node
        Node { state: v, len: self.len }
     }
 
-    fn get_neighbour(&self) -> Vec<Node>
+    pub fn get_neighbour(&self) -> Vec<Node>
     {
         let mut res = Vec::with_capacity(4);
         let size = self.len;
         let x = || -> usize
         {
-            for i in 0..size
+            for i in 0..size*size
             {
                 if self.state[i] == 0 { return i; }
             }
             panic!("The empty square is missing");
         }();
         if (x % size) > 0 { res.push(self.swap(x, x - 1)); }
-        if x - size > 0 { res.push(self.swap(x, x - size)); }
+        if x > size { res.push(self.swap(x, x - size)); }
         if (x + 1 % size) > 0 { res.push(self.swap(x, x + 1)); }
-        if x + size < size*size { res.push(self.swap(x, x + size)); }
+        if (x + size) < (size*size) { res.push(self.swap(x, x + size)); }
         res
     }
 }

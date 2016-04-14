@@ -33,12 +33,10 @@ fn main() {
         .map(|s| s.to_string())
         .collect();
     let start = parser::to_node(parser::remove_comments(vec));
-    println!("{}", astar::create_goal(11));
-    println!("{}", astar::create_goal(9));
-    println!("{}", astar::create_goal(8));
-    println!("{}", astar::create_goal(7));
-    println!("{}", astar::create_goal(6));
-    println!("{}", astar::create_goal(5));
-    println!("{}", astar::create_goal(4));
-    println!("{}", astar::create_goal(3));
+    let goal = astar::create_goal(3);
+    println!("{}\n{}", goal, start);
+    for neighbour in start.get_neighbour()
+    {
+        println!("{}", neighbour);
+    }
 }
