@@ -1,6 +1,7 @@
 use std::hash::{Hash, Hasher};
 use std::collections::HashMap;
 use std::fmt;
+use heuristic::Heuristic;
 
 pub struct Node
 {
@@ -72,6 +73,11 @@ impl Node
 		if (x + size) < (size*size) { res.push(self.swap(x, x + size)); }
 		res
 	}
+
+    pub fn get_score(&self, goal: &Goal, h: Heuristic) -> i32
+    {
+        h.get_score(self, goal) 
+    }
 }
 
 impl Goal

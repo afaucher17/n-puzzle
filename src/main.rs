@@ -1,6 +1,9 @@
 mod parser;
 mod node;
 mod astar;
+mod heuristic;
+
+use heuristic::Heuristic;
 
 use std::error::Error;
 use std::hash::{Hash, Hasher, SipHasher};
@@ -40,10 +43,10 @@ fn main() {
         .map(|s| s.to_string())
         .collect();
     let start = parser::to_node(parser::remove_comments(vec));
-    let goal = node::Goal::new(5);
-    println!("{}\n{}", goal, start);
+    let goal = node::Goal::new(start.len);
+    println!("{}\n{}", start, start.get_score(&goal, Heuristic::Manhattan));
     for neighbour in start.get_neighbour()
     {
-        println!("{}", hash(&neighbour));
+        println!("score = {}", neighbour.get_score(&goal, Heuristic::Manhattan));
     }
 }
