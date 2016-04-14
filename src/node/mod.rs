@@ -74,7 +74,7 @@ impl Node
 		res
 	}
 
-    pub fn get_score(&self, goal: &Goal, h: Heuristic) -> i32
+    pub fn get_score(&self, goal: &Goal, h: &Heuristic) -> i32
     {
         h.get_score(self, goal) 
     }

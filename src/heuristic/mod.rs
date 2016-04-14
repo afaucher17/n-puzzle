@@ -26,7 +26,7 @@ impl Heuristic {
         score
     }
 
-    pub fn get_heuristic(s: String) -> Option<Heuristic>
+    pub fn str_to_heuristic(s: &str) -> Option<Heuristic>
     {
         match s.to_ascii_lowercase().as_ref() {
             "manhattan" => Some(Heuristic::Manhattan),

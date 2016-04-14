@@ -44,9 +44,14 @@ fn main() {
         .collect();
     let start = parser::to_node(parser::remove_comments(vec));
     let goal = node::Goal::new(start.len);
-    println!("{}\n{}", start, start.get_score(&goal, Heuristic::Manhattan));
+    let heuristic = match Heuristic::str_to_heuristic("Manhattan")
+    {
+        Some(n) => n,
+        None => panic!("Test failed")
+    };
+    println!("{}\n{}", start, start.get_score(&goal, &heuristic));
     for neighbour in start.get_neighbour()
     {
-        println!("score = {}", neighbour.get_score(&goal, Heuristic::Manhattan));
+        println!("score = {}", neighbour.get_score(&goal, &heuristic));
     }
 }
