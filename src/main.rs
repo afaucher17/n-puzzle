@@ -3,6 +3,7 @@ mod node;
 mod astar;
 
 use std::error::Error;
+use std::hash::{Hash, Hasher, SipHasher};
 use std::env;
 use std::io::prelude::*;
 use std::fs::File;
@@ -22,6 +23,12 @@ fn read_files(filename: &String) -> String {
         }
 }
 
+fn hash<T: Hash>(t: &T) -> u64 {
+    let mut s = SipHasher::new();
+    t.hash(&mut s);
+    s.finish()
+}
+
 fn main() {
     let argv : Vec<String> = env::args().collect();
     match argv.len() {
@@ -33,10 +40,10 @@ fn main() {
         .map(|s| s.to_string())
         .collect();
     let start = parser::to_node(parser::remove_comments(vec));
-    let goal = astar::create_goal(3);
+    let goal = node::Goal::new(5);
     println!("{}\n{}", goal, start);
     for neighbour in start.get_neighbour()
     {
-        println!("{}", neighbour);
+        println!("{}", hash(&neighbour));
     }
 }
