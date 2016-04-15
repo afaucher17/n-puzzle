@@ -1,6 +1,12 @@
 mod parser;
+mod node;
+mod astar;
+mod heuristic;
+
+use heuristic::Heuristic;
 
 use std::error::Error;
+use std::hash::{Hash, Hasher, SipHasher};
 use std::env;
 use std::io::prelude::*;
 use std::fs::File;
@@ -20,6 +26,12 @@ fn read_files(filename: &String) -> String {
     }
 }
 
+fn hash<T: Hash>(t: &T) -> u64 {
+    let mut s = SipHasher::new();
+    t.hash(&mut s);
+    s.finish()
+}
+
 fn main() {
     let argv : Vec<String> = env::args().collect();
     match argv.len() {
@@ -30,10 +42,16 @@ fn main() {
     let vec: Vec<String> = result.split("\n")
         .map(|s| s.to_string())
         .collect();
-    for tab in parser::to_array(parser::remove_comments(vec)) {
-        for square in tab {
-            print!("{} ", square);
-        }
-        println!("");
+    let start = parser::to_node(parser::remove_comments(vec));
+    let goal = node::Goal::new(start.len);
+    let heuristic = match Heuristic::str_to_heuristic("Manhattan")
+    {
+        Some(n) => n,
+        None => panic!("Test failed")
+    };
+    println!("{}\n{}", start, start.get_score(&goal, &heuristic));
+    for neighbour in start.get_neighbour()
+    {
+        println!("score = {}", neighbour.get_score(&goal, &heuristic));
     }
 }

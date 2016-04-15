@@ -1,5 +1,7 @@
 extern crate regex;
 
+use node::Node;
+
 pub fn remove_comments(lines: Vec<String>) -> Vec<String>
 {
     let rgx = regex::Regex::new(r"(#.*)$|(^#.*$)").unwrap();
@@ -9,9 +11,9 @@ pub fn remove_comments(lines: Vec<String>) -> Vec<String>
         .collect()
 }
 
-pub fn to_array(lines: Vec<String>) -> Vec<Vec<usize>>
+pub fn to_node(lines: Vec<String>) -> Node
 {
-    let size: usize = match lines[0].parse::<usize>() {
+    let len: usize = match lines[0].parse::<usize>() {
         Ok(n) => match n {
             0...2 => panic!("The array size must be equal or greater than 3."),
             _ => n,
@@ -19,10 +21,11 @@ pub fn to_array(lines: Vec<String>) -> Vec<Vec<usize>>
         Err(_) => panic!("The array size is invalid."),
     };
     let rgx = regex::Regex::new(r"[\s]+").unwrap();
-    (0..size).map(|i| rgx.split(&lines[i + 1])
-                  .filter(|s| *s != "")
-                  .map(|s| s.parse::<usize>()
-                       .expect("Wrong file format"))
-                  .collect::<Vec<usize>>())
-        .collect::<Vec<Vec<usize>>>()
+    let state = rgx.split(&lines[1..].join(" "))
+        .filter(|s| *s != "")
+        .map(|s| s.parse::<usize>()
+             .expect("Wrong file format"))
+        .collect::<Vec<usize>>();
+    if state.len() != len*len { panic!("Incorrect puzzle size. Expected {}, got {}", len*len, state.len()); }
+    Node { state: state, len: len }
 }
