@@ -5,6 +5,7 @@ use node::{Node, Goal};
 pub enum Heuristic
 {
     Manhattan,
+    Linear,
     // Your new heuristic
 }
 
@@ -24,6 +25,11 @@ impl Heuristic {
             }
         }
         score
+    }
+
+    fn linear(node: &Node, goal: &Goal) -> i32
+    {
+
     }
 
     pub fn str_to_heuristic(s: &str) -> Option<Heuristic>
