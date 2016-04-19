@@ -1,5 +1,9 @@
 # N-Puzzle
 
+[![travis-badge][]][travis]
+[travis-badge]: https://travis-ci.org/adjivas/n-puzzle.svg?branch=master&style=flat-square
+[travis]: https://travis-ci.org/adjivas/n-puzzle
+
 ### Usage
 ```text
 Npuzzle

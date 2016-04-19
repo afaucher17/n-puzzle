@@ -7,6 +7,11 @@ rust:
   - nightly
   - beta
 
+matrix:
+  allow_failures:
+    - rust: stable
+    - rust: beta
+
 os:
   - linux
   - osx
