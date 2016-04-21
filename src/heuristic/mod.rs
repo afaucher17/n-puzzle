@@ -29,7 +29,7 @@ impl Heuristic {
 
     fn linear(node: &Node, goal: &Goal) -> i32
     {
-
+        
     }
 
     pub fn str_to_heuristic(s: &str) -> Option<Heuristic>
