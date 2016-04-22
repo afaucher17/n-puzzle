@@ -44,7 +44,7 @@ fn main() {
         .collect();
     let start = parser::to_node(parser::remove_comments(vec));
     let goal = node::Goal::new(start.len);
-    let heuristic = match Heuristic::str_to_heuristic("Manhattan")
+    let heuristic = match Heuristic::str_to_heuristic("Linear")
     {
         Some(n) => n,
         None => panic!("Test failed")
