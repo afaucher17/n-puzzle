@@ -104,20 +104,15 @@ impl Node
 
     pub fn is_solvable(&self) -> bool
     {
-        let linear: Vec<usize> = self.get_linear().into_iter().filter(|&x| x != 0).collect();
-        let mut row: usize = 0;
-        let mut inversions: usize = 0;
+        let linear: Vec<usize> = self.get_linear();
         let odd = { |&x| x % 2 != 0 };
         let even = { |&x| x % 2 == 0 };
-        for (i, el1) in linear.iter().enumerate()
+        let mut inversions = 0;
+        for (i, el) in linear.iter().enumerate()
         {
-            if *el1 == 0 { row = i / self.len; continue; }
-            for el2 in (linear[i + 1 .. linear.len()]).iter()
-            {
-                if *el2 != 0 && *el1 > *el2 { inversions += 1; }
-            }
+            inversions += linear[i + 1 .. linear.len()].iter().fold(0, |sum, &x| if x != 0 && *el > x { sum + 1 } else { sum });
         }
-        (odd(&self.len) && even(&inversions)) || (even(&(self.len)) && (odd(&row) == even(&inversions))) 
+        (odd(&self.len) && even(&inversions)) 
     }
 }
 
