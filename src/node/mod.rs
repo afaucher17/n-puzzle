@@ -86,26 +86,28 @@ impl Goal
 	{
 		let mut tab = vec![0; size*size];
 		let mut map = HashMap::new();
-		let (mut pos, mut cpt) = (0, 0);
-		let mut inc: i32 = 1;
-		for i in 1..size*size
-		{
-			tab[pos] = i;
-			map.insert(i, (pos % size, pos / size));
-			if size == cpt + 1 || tab[(pos as i32 + inc) as usize] != 0
-			{
-				inc = match inc {
-					1 => size as i32,
-					x if x == size as i32 => -1,
-					-1 => -(size as i32),
-					x if x == -(size as i32) => 1,
-					_ => 0,
-				};
-				cpt = 1;
-			}
-			else { cpt += 1; }
-			pos = (pos as i32 + inc) as usize;
-		}
+        let (mut top, mut down, mut left, mut right) = (0, size - 1, 0, size - 1);
+        let mut count: usize = 1;
+        let mut inc = || -> usize {
+            let save = if count < (size * size) { count } else { 0 };
+            count += 1;
+            save
+        };
+        loop
+        {
+            for i in left...right { map.insert(count, (top, i)); tab[top * size + i] = inc();}
+            top += 1;
+            if top > down || left > right { break; }
+            for i in top...down { map.insert(count, (i, right)); tab[i * size + right] = inc();}
+            right -= 1;
+            if top > down || left > right { break; }
+            for i in (left...right).rev() { map.insert(count, (down, i)); tab[down * size + i] = inc();}
+            down -= 1;
+            if top > down || left > right { break; }
+            for i in (top...down).rev() { map.insert(count, (i, left)); tab[i * size + left] = inc();}
+            left += 1;
+            if top > down || left > right { break; }
+        }
 		Goal { node: Node { state: tab, len:size }, map: map }
 	}
 }

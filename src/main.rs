@@ -1,3 +1,4 @@
+#![feature(inclusive_range_syntax)]
 mod parser;
 mod node;
 mod astar;
