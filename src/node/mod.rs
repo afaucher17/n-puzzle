@@ -110,7 +110,6 @@ impl Node
         let mut inversions = 0;
         for (i, el) in linear.iter().enumerate()
         {
-            println!("{} {}", el, i);
             inversions += linear[i + 1 .. linear.len()].iter().fold(0, |sum, &x| if x != 0 && *el > x { sum + 1 } else { sum });
         }
         (odd(&self.len) && even(&inversions)) 
