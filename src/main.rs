@@ -14,17 +14,17 @@ use std::fs::File;
 use std::path::Path;
 
 fn read_files(filename: &String) -> String {
-        let path = Path::new(filename);
-        let display = path.display();
-        let mut file = match File::open(&path) {
-            Err(why) => panic!("Could not open {}: {}", display, Error::description(&why)),
-            Ok(file) => file,
-        };
-        let mut buffer = String::new();
-        match file.read_to_string(&mut buffer) {
-            Err(why) => panic!("Could not read {}: {}", display, Error::description(&why)),
-            Ok(_) => buffer,
-        }
+    let path = Path::new(filename);
+    let display = path.display();
+    let mut file = match File::open(&path) {
+        Err(why) => panic!("Could not open {}: {}", display, Error::description(&why)),
+        Ok(file) => file,
+    };
+    let mut buffer = String::new();
+    match file.read_to_string(&mut buffer) {
+        Err(why) => panic!("Could not read {}: {}", display, Error::description(&why)),
+        Ok(_) => buffer,
+    }
 }
 
 fn hash<T: Hash>(t: &T) -> u64 {
@@ -45,7 +45,7 @@ fn main() {
         .collect();
     let start = parser::to_node(parser::remove_comments(vec));
     let goal = node::Goal::new(start.len);
-    let heuristic = match Heuristic::str_to_heuristic("Manhattan")
+    let heuristic = match Heuristic::str_to_heuristic("Linear")
     {
         Some(n) => n,
         None => panic!("Test failed")
