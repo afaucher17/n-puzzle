@@ -6,6 +6,7 @@ pub enum Heuristic
 {
     Manhattan,
     Linear,
+    Xy,
     // Your new heuristic
 }
 
@@ -37,7 +38,6 @@ impl Heuristic {
             {
                 for (j, el2) in chunk[i + 1 .. chunk.len()].iter().enumerate()
                 {
-                    println!("lines ({}, {})", &el1, &el2);
                     if let (Some(&(x, y)), Some(&(x2, y2))) = (goal.map.get(&el1), goal.map.get(&el2))
                     {
                         if y == line && y2 == line && (i as i32 - (i + j + 1) as i32) * (x as i32 - x2 as i32) < 0 { score += 2; }
@@ -47,18 +47,17 @@ impl Heuristic {
         }
         for col in 0..node.len
         {
-            let filtered: Vec<_> = node.state.iter().filter(|&x| x % node.len == col).collect();
+            let filtered: Vec<_> = node.state.iter().enumerate()
+                                            .filter(|&(index, _)| index % node.len == col)
+                                            .map(|(_, v)| v)
+                                            .collect();
             for (i, el1) in filtered.iter().enumerate()
             {
                 for (j, el2) in filtered[i + 1 .. filtered.len()].iter().enumerate()
                 {
-                    println!("columns ({}, {})", &el1, &el2);
                     if let (Some(&(x, y)), Some(&(x2, y2))) = (goal.map.get(&el1), goal.map.get(&el2))
                     {
-                        if x == col &&
-                            x2 == col &&
-                                (i as i32 - (i + j + 1) as i32) * (y as i32 - y2 as i32) < 0
-                                { score += 2; }
+                        if x == col && x2 == col && (i as i32 - (i + j + 1) as i32) * (y as i32 - y2 as i32) < 0 { score += 2; }
                     }
                 }
             }
@@ -67,12 +66,45 @@ impl Heuristic {
         score
     }
 
+    fn xy(node: &Node, goal: &Goal) -> i32
+    {
+        let mut score: i32 = 0;
+        for (line, chunk) in node.state.chunks(node.len).enumerate()
+        {
+            for (i, square) in chunk.iter().enumerate()
+            {
+                if let Some(&(x, y)) = goal.map.get(&square) {
+                    score += 
+                        if *square != 0 && y == line { ((x as i32 - i as i32) as i32).abs() }
+                        else { 0 }
+                }
+            }
+        }
+        for col in 0..node.len
+        {
+            let filtered: Vec<_> = node.state.iter().enumerate()
+                                            .filter(|&(index, _)| index % node.len == col)
+                                            .map(|(_, v)| *v)
+                                            .collect();
+            for (i, square) in filtered.iter().enumerate()
+            {
+                if let Some(&(x, y)) = goal.map.get(&square) {
+                    score +=
+                        if *square != 0 && x == col { ((y as i32 - i as i32) as i32).abs() }
+                        else { 0 }
+                }
+            }
+        }
+        println!("Xy: {}", score);
+        score
+    }
+
     pub fn str_to_heuristic(s: &str) -> Option<Heuristic>
     {
-        
         match s.to_ascii_lowercase().as_ref() {
             "manhattan" => Some(Heuristic::Manhattan),
             "linear" => Some(Heuristic::Linear),
+            "xy" => Some(Heuristic::Xy),
             // Your new heuristic string => heuristic enum
             _ => None
         }
@@ -83,6 +115,7 @@ impl Heuristic {
         match *self {
             Heuristic::Manhattan => Heuristic::manhattan(node, goal),
             Heuristic::Linear => Heuristic::manhattan(node, goal) + Heuristic::linear(node, goal),
+            Heuristic::Xy => Heuristic::xy(node, goal),
             // Your new heuristic enum => heuristic function
         }
     }

@@ -9,7 +9,7 @@ readme = "README.md"
 keywords = ["n-puzzle", "puzzle"]
 
 [[bin]]
-name = "pasteur"
+name = "n-puzzle"
 doc = false
 
 [features]
