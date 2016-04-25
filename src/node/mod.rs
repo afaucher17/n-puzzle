@@ -124,23 +124,19 @@ impl Goal
         let mut map = HashMap::new();
         let (mut top, mut down, mut left, mut right) = (0, size - 1, 0, size - 1);
         let mut count: usize = 1;
-        let mut inc = |mut cpt: usize| -> usize {
-            let save = if cpt < (size * size) { cpt } else { 0 };
-            cpt += 1;
-            save
-        };
+        let fill = |cpt: &usize| if *cpt < (size * size) { *cpt } else { 0 };
         loop
         {
-            for i in left...right { map.insert(count, (top, i)); tab[top * size + i] = inc(count);}
+            for i in left...right { map.insert(count, (top, i)); tab[top * size + i] = fill(&count); count += 1; }
             top += 1;
             if top > down || left > right { break; }
-            for i in top...down { map.insert(count, (i, right)); tab[i * size + right] = inc(count);}
+            for i in top...down { map.insert(count, (i, right)); tab[i * size + right] = fill(&count); count += 1; }
             right -= 1;
             if top > down || left > right { break; }
-            for i in (left...right).rev() { map.insert(count, (down, i)); tab[down * size + i] = inc(count);}
+            for i in (left...right).rev() { map.insert(count, (down, i)); tab[down * size + i] = fill(&count); count += 1; }
             down -= 1;
             if top > down || left > right { break; }
-            for i in (top...down).rev() { map.insert(count, (i, left)); tab[i * size + left] = inc(count);}
+            for i in (top...down).rev() { map.insert(count, (i, left)); tab[i * size + left] = fill(&count); count += 1;}
             left += 1;
             if top > down || left > right { break; }
         }

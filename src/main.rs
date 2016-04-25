@@ -56,6 +56,6 @@ fn main() {
         let start = parser::to_node(parser::remove_comments(vec));
         if !start.is_solvable() { println!("{}", Yellow.bold().paint("This puzzle is not solvable.")); }
         else { let goal = node::Goal::new(start.len);
-            println!("Goal:\n{}", goal.node) }
+            println!("Goal:\n{} Start:\n{} Score: {}", &goal.node, &start, start.get_score(&goal, &heuristic)) }
     }
 }
