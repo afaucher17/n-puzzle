@@ -69,7 +69,7 @@ impl Node
         }();
         if (x % size) > 0 { res.push(self.swap(x, x - 1)); }
         if x > size { res.push(self.swap(x, x - size)); }
-        if (x + 1 % size) > 0 { res.push(self.swap(x, x + 1)); }
+        if ((x + 1) % size) > 0 { res.push(self.swap(x, x + 1)); }
         if (x + size) < (size*size) { res.push(self.swap(x, x + size)); }
         res
     }
