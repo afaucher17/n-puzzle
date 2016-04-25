@@ -1,3 +1,4 @@
+#![feature(inclusive_range_syntax)]
 #[macro_use]
 extern crate clap;
 
@@ -51,7 +52,7 @@ fn main() {
             .collect();
         let start = parser::to_node(parser::remove_comments(vec));
         let goal = node::Goal::new(start.len);
-        println!("{}\n{}", start, start.get_score(&goal, &heuristic));
+        println!("{}\n{} {}", start, start.get_score(&goal, &heuristic), start.is_solvable());
         for neighbour in start.get_neighbour() {
             println!("score = {}", neighbour.get_score(&goal, &heuristic));
         }

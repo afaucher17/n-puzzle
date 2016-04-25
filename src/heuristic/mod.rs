@@ -56,7 +56,10 @@ impl Heuristic {
                 {
                     if let (Some(&(x, y)), Some(&(x2, y2))) = (goal.map.get(&el1), goal.map.get(&el2))
                     {
-                        if x == col && x2 == col && (i as i32 - (i + j + 1) as i32) * (y as i32 - y2 as i32) < 0 { score += 2; }
+                        if x == col &&
+                            x2 == col &&
+                                (i as i32 - (i + j + 1) as i32) * (y as i32 - y2 as i32) < 0
+                                { score += 2; }
                     }
                 }
             }
@@ -67,6 +70,7 @@ impl Heuristic {
 
     pub fn str_to_heuristic(s: &str) -> Option<Heuristic>
     {
+        
         match s.to_ascii_lowercase().as_ref() {
             "manhattan" => Some(Heuristic::Manhattan),
             "linear" => Some(Heuristic::Linear),
