@@ -1,8 +1,24 @@
 [package]
 name = "n-puzzle"
-version = "0.1.0"
-authors = ["tdieumeg"]
+version = "0.1.1"
+authors = ["tdieumeg <tdieumeg@users.noreply.github.com>, afaucher17 <afaucher17@users.noreply.github.com>"]
+description = "Taquin (N-Puzzle) is a sliding puzzle that consists of a frame of numbered square tiles in random order with one tile missing."
+documentation = "https://Thomas2511.github.io/n-puzzle/n-puzzle"
+repository = "https://github.com/Thomas2511/n-puzzle.git"
+readme = "README.md"
+keywords = ["n-puzzle", "puzzle"]
+
+[[bin]]
+name = "pasteur"
+doc = false
+
+[features]
+unstable = [] # for travis-cargo
 
 [dependencies]
 regex = "0.1"
 regex_macros = "0.1"
+
+[dependencies.clap]
+version = "*"
+features = ["yaml", "suggestions", "color"]

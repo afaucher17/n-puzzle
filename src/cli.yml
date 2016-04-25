@@ -1,0 +1,23 @@
+# This file describe the command line interface options
+name: Npuzzle
+version: 0.1
+about: Taquin (N-Puzzle) is a sliding puzzle that consists of a frame of numbered square tiles in random order with one tile missing.
+author:
+  - tdieumeg <tdieumeg@users.noreply.github.com>
+  - afaucher17 <afaucher17@users.noreply.github.com>
+
+args:
+    - heuristic:
+        help: Defines the heuristic.
+        short: h
+        long: heuristic
+        takes_value: true
+        possible_values:
+          - manhattan
+    - file:
+        help: Defines the input.
+        short: f
+        long: file
+        multiple: true
+        takes_value: true
+        required: true
