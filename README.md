@@ -11,7 +11,7 @@ Npuzzle
 Taquin (N-Puzzle) is a sliding puzzle that consists of a frame of numbered square tiles in random order with one tile missing.
 
 USAGE:
-    pasteur [FLAGS] [OPTIONS] --file <file>...
+    n-puzzle [FLAGS] [OPTIONS] --file <file>...
 
 FLAGS:
         --help       Prints help information
