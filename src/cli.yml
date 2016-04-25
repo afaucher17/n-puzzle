@@ -15,6 +15,7 @@ args:
         possible_values:
           - manhattan
           - linear
+          - xy
     - file:
         help: Defines the input.
         short: f
