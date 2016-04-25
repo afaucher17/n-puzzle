@@ -1,6 +1,7 @@
 #![feature(inclusive_range_syntax)]
 #[macro_use]
 extern crate clap;
+extern crate ansi_term;
 
 const DEFAULT_HEURISTIC: &'static str = "manhattan";
 
@@ -10,6 +11,8 @@ mod astar;
 mod heuristic;
 
 use heuristic::Heuristic;
+
+use ansi_term::Colour::*;
 
 use std::error::Error;
 use std::hash::{Hash, Hasher, SipHasher};
@@ -51,10 +54,7 @@ fn main() {
             .map(|s| s.to_string())
             .collect();
         let start = parser::to_node(parser::remove_comments(vec));
-        let goal = node::Goal::new(start.len);
-        println!("{}\n{} {}", start, start.get_score(&goal, &heuristic), start.is_solvable());
-        for neighbour in start.get_neighbour() {
-            println!("score = {}", neighbour.get_score(&goal, &heuristic));
-        }
+        if !start.is_solvable() { println!("{}", Yellow.bold().paint("This puzzle is not solvable.")); }
+        else { let goal = node::Goal::new(start.len); }
     }
 }
