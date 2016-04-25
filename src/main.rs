@@ -41,9 +41,9 @@ fn main() {
     let yaml = load_yaml!("cli.yml");
     let options = clap::App::from_yaml(yaml).get_matches();
 
-    let heuristic = Heuristic::str_to_heuristic (
-        options.value_of("heuristic").unwrap_or(DEFAULT_HEURISTIC),
-    );
+    let heuristic = Heuristic::str_to_heuristic(options
+                                                .value_of("heuristic")
+                                                .unwrap_or(DEFAULT_HEURISTIC)).unwrap();
     for file in options.values_of("file").unwrap().collect::<Vec<_>>() {
         let result: String = read_files(&file.to_string());
         let vec: Vec<String> = result.split("\n")

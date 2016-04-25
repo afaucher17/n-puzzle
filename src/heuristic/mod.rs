@@ -40,7 +40,7 @@ impl Heuristic {
                     println!("lines ({}, {})", &el1, &el2);
                     if let (Some(&(x, y)), Some(&(x2, y2))) = (goal.map.get(&el1), goal.map.get(&el2))
                     {
-                        if y == line && y2 == line && (i as i32 - (i + j + 1) as i32) * (x as i32 - x2 as i32) < 0 { println!("", ) score += 2; }
+                        if y == line && y2 == line && (i as i32 - (i + j + 1) as i32) * (x as i32 - x2 as i32) < 0 { score += 2; }
                     }
                 }
             }

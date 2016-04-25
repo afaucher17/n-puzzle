@@ -1,8 +1,8 @@
 # N-Puzzle
 
 [![travis-badge][]][travis]
-[travis-badge]: https://travis-ci.org/adjivas/n-puzzle.svg?branch=master&style=flat-square
-[travis]: https://travis-ci.org/adjivas/n-puzzle
+[travis-badge]: https://travis-ci.org/Thomas2511/n-puzzle.svg?branch=master&style=flat-square
+[travis]: https://travis-ci.org/Thomas2511/n-puzzle
 
 ### Usage
 ```text
