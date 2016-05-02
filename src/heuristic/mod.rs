@@ -40,7 +40,6 @@ impl Heuristic {
                 {
                     if let (Some(&(x, y)), Some(&(x2, y2))) = (goal.map.get(&el1), goal.map.get(&el2))
                     {
-                        println!("[y: {}] [y2: {}] [line: {}] [i: {}] [val: {}]", y, y2, line, i, i - (i + j + 1) * (x - x2));
                         if y == line && y2 == line && (i as i32 - (i + j + 1) as i32) * (x as i32 - x2 as i32) < 0 { score += 2; }
                     }
                 }
@@ -63,8 +62,6 @@ impl Heuristic {
                 }
             }
         }
-
-        println!("Linear: {}", score);
         score
     }
 
@@ -97,7 +94,6 @@ impl Heuristic {
                 }
             }
         }
-        println!("Xy: {}", score);
         score
     }
 

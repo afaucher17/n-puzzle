@@ -7,12 +7,13 @@ pub struct Node
 {
     pub state: Vec<usize>,
     pub len: usize,
+    pub score: i32
 }
 
 pub struct Goal
 {
     pub node: Node,
-    pub map: HashMap<usize, (usize, usize)>,
+    pub map: HashMap<usize, (usize, usize)>
 }
 
 impl Hash for Node
@@ -20,6 +21,22 @@ impl Hash for Node
     fn hash<H: Hasher>(&self, state: &mut H)
     {
         self.state.hash(state);
+    }
+}
+
+impl Ord for Node
+{
+    fn cmp(&self, other: &Self) -> Ordering
+    {
+        other.score.cmp(&(self.score))
+    }
+}
+
+impl PartialEq for Node
+{
+    fn eq(&self, other: &Self) -> bool
+    {
+        self.state == other.state
     }
 }
 
@@ -105,14 +122,13 @@ impl Node
     pub fn is_solvable(&self) -> bool
     {
         let linear: Vec<usize> = self.get_linear();
-        let odd = { |&x| x % 2 != 0 };
         let even = { |&x| x % 2 == 0 };
         let mut inversions = 0;
         for (i, el) in linear.iter().enumerate()
         {
             inversions += linear[i + 1 .. linear.len()].iter().fold(0, |sum, &x| if x != 0 && *el > x { sum + 1 } else { sum });
         }
-        (odd(&self.len) && even(&inversions)) 
+        (even(&inversions)) 
     }
 }
 
