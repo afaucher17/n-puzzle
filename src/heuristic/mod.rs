@@ -30,7 +30,7 @@ impl Heuristic {
 
     fn linear(node: &Node, goal: &Goal) -> i32
     {
-        let mut score: i32 = 0;
+        let mut score: i32 = Heuristic::manhattan(node, goal);
 
         for (line, chunk) in node.state.chunks(node.len).enumerate()
         {
@@ -107,7 +107,6 @@ impl Heuristic {
             "manhattan" => Some(Heuristic::Manhattan),
             "linear" => Some(Heuristic::Linear),
             "xy" => Some(Heuristic::Xy),
-            // Your new heuristic string => heuristic enum
             _ => None
         }
     }
@@ -116,9 +115,8 @@ impl Heuristic {
     {
         match *self {
             Heuristic::Manhattan => Heuristic::manhattan(node, goal),
-            Heuristic::Linear => Heuristic::manhattan(node, goal) + Heuristic::linear(node, goal),
+            Heuristic::Linear => Heuristic::linear(node, goal),
             Heuristic::Xy => Heuristic::xy(node, goal),
-            // Your new heuristic enum => heuristic function
         }
     }
 }

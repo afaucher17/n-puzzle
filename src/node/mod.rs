@@ -127,16 +127,16 @@ impl Goal
         let fill = |cpt: &usize| if *cpt < (size * size) { *cpt } else { 0 };
         loop
         {
-            for i in left...right { map.insert(count, (top, i)); tab[top * size + i] = fill(&count); count += 1; }
+            for i in left...right { map.insert(count, (i, top)); tab[top * size + i] = fill(&count); count += 1; }
             top += 1;
             if top > down || left > right { break; }
-            for i in top...down { map.insert(count, (i, right)); tab[i * size + right] = fill(&count); count += 1; }
+            for i in top...down { map.insert(count, (right, i)); tab[i * size + right] = fill(&count); count += 1; }
             right -= 1;
             if top > down || left > right { break; }
-            for i in (left...right).rev() { map.insert(count, (down, i)); tab[down * size + i] = fill(&count); count += 1; }
+            for i in (left...right).rev() { map.insert(count, (i, down)); tab[down * size + i] = fill(&count); count += 1; }
             down -= 1;
             if top > down || left > right { break; }
-            for i in (top...down).rev() { map.insert(count, (i, left)); tab[i * size + left] = fill(&count); count += 1;}
+            for i in (top...down).rev() { map.insert(count, (left, i)); tab[i * size + left] = fill(&count); count += 1;}
             left += 1;
             if top > down || left > right { break; }
         }
