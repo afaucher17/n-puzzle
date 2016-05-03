@@ -27,5 +27,5 @@ pub fn to_node(lines: Vec<String>) -> Node
              .expect("Wrong file format"))
         .collect::<Vec<usize>>();
     if state.len() != len*len { panic!("Incorrect puzzle size. Expected {}, got {}", len*len, state.len()); }
-    Node { state: state, len: len }
+    Node { state: state, len: len, score: 0 }
 }

@@ -10,6 +10,8 @@ mod node;
 mod astar;
 mod heuristic;
 
+use node::Node;
+
 use heuristic::Heuristic;
 
 use ansi_term::Colour::*;

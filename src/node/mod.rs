@@ -1,6 +1,10 @@
+
 use std::hash::{Hash, Hasher};
 use std::collections::HashMap;
 use std::fmt;
+
+use std::cmp::Ordering;
+
 use heuristic::Heuristic;
 
 pub struct Node
@@ -24,11 +28,21 @@ impl Hash for Node
     }
 }
 
+impl Eq for Node {}
+
 impl Ord for Node
 {
     fn cmp(&self, other: &Self) -> Ordering
     {
         other.score.cmp(&(self.score))
+    }
+}
+
+impl PartialOrd for Node
+{
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering>
+    {
+        Some(self.cmp(other))
     }
 }
 
@@ -69,7 +83,7 @@ impl Node
         let save = v[sq1];
         v[sq1] = v[sq2];
         v[sq2] = save;
-        Node { state: v, len: self.len }
+        Node { state: v, len: self.len, score: 0 }
     }
 
     pub fn get_neighbour(&self) -> Vec<Node>
@@ -156,6 +170,6 @@ impl Goal
             left += 1;
             if top > down || left > right { break; }
         }
-        Goal { node: Node { state: tab, len:size }, map: map }
+        Goal { node: Node { state: tab, len:size, score: 0 }, map: map }
     }
 }
