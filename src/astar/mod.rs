@@ -50,7 +50,7 @@ pub fn astar(start: &mut Node, goal: &Goal, heuristic: &Heuristic) -> Option <Ve
                     {
                         (None, _) | (Some(_), false) => 
                         {
-                            neighbour.score = tentative_g_score + heuristic.get_score(&neighbour, goal);
+                            neighbour.score = heuristic.get_score(&neighbour, goal);
                             came_from.insert(neighbour.clone(), current.clone());
                             g_score.insert(neighbour.clone(), tentative_g_score);
                             if let None = opened_set.iter().find(|&x| x == &neighbour) 
