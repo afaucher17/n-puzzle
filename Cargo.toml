@@ -19,6 +19,7 @@ unstable = [] # for travis-cargo
 regex = "0.1"
 regex_macros = "0.1"
 ansi_term = "0.7"
+time = "*"
 
 [dependencies.clap]
 version = "*"

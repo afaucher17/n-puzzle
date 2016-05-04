@@ -2,6 +2,7 @@
 #[macro_use]
 extern crate clap;
 extern crate ansi_term;
+extern crate time;
 
 const DEFAULT_HEURISTIC: &'static str = "manhattan";
 
