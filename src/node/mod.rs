@@ -7,6 +7,7 @@ use std::cmp::Ordering;
 
 use heuristic::Heuristic;
 
+#[derive(Clone)]
 pub struct Node
 {
     pub state: Vec<usize>,
@@ -14,6 +15,7 @@ pub struct Node
     pub score: i32
 }
 
+#[derive(Clone)]
 pub struct Goal
 {
     pub node: Node,

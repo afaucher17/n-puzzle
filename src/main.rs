@@ -55,9 +55,13 @@ fn main() {
         let vec: Vec<String> = result.split("\n")
             .map(|s| s.to_string())
             .collect();
-        let start = parser::to_node(parser::remove_comments(vec));
+        let mut start = parser::to_node(parser::remove_comments(vec));
         if !start.is_solvable() { println!("{}", Yellow.bold().paint("This puzzle is not solvable.")); }
         else { let goal = node::Goal::new(start.len);
-            println!("Goal:\n{} Start:\n{} Score: {}", &goal.node, &start, start.get_score(&goal, &heuristic)) }
+            for node in astar::astar(&mut start, &goal, &heuristic).unwrap()
+            {
+                println!("{}", node)
+            }
+        }
     }
 }
