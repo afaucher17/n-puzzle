@@ -1,19 +1,13 @@
-#![feature(inclusive_range_syntax)]
 #[macro_use]
 extern crate clap;
 extern crate ansi_term;
-extern crate time;
+
+extern crate n_puzzle;
 
 const DEFAULT_HEURISTIC: &'static str = "manhattan";
 
-mod parser;
-mod node;
-mod astar;
-mod heuristic;
-
-use node::Node;
-
-use heuristic::Heuristic;
+use n_puzzle::{node, astar, parser};
+use n_puzzle::heuristic::Heuristic;
 
 use ansi_term::Colour::*;
 
